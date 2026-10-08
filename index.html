@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>React Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bar"></div>
+<header>
+<h1>React Study Guide</h1>
+<p>A quick study guide covering every topic in the syllabus: from setting up Node.js to testing single page applications. Tap a topic below to jump to it.</p>
+</header>
+<nav><div>
+<a href="#s1">Intro</a><a href="#s2">JSX</a><a href="#s3">Components</a><a href="#s4">Props &amp; State</a><a href="#s44">Lifecycle</a><a href="#s5">Events</a><a href="#s6">Conditional</a><a href="#s7">Lists &amp; Keys</a><a href="#s8">Forms</a><a href="#s9">Lifting State</a><a href="#s10">Testing</a><a href="#q">Questions</a>
+</div></nav>
+<main>
+
+<section id="s1"><h2>5.1 Introduction to React</h2><p class="pg">Pages 93</p>
+<h3>What is React?</h3>
+<p>A JavaScript library from Meta for building user interfaces out of small, reusable pieces called components. It uses a virtual DOM, so it updates only the parts of the page that changed.</p>
+<h3>Setting up the environment</h3>
+<p>Install Node.js (it includes npm), then create a project:</p>
+<pre><code>node -v
+npm create vite@latest my-app -- --template react
+cd my-app
+npm install
+npm run dev</code></pre>
+<h3>Folder structure</h3>
+<ul><li><code>node_modules/</code> installed packages</li><li><code>public/</code> static files</li><li><code>src/</code> your code: <code>main.jsx</code> (entry point), <code>App.jsx</code> (root component)</li><li><code>package.json</code> dependencies and scripts</li><li><code>index.html</code> the single page that React mounts into</li></ul>
+</section>
+
+<section id="s2"><h2>5.2 Introduction to JSX</h2><p class="pg">Pages 94 to 95</p>
+<p>JSX is HTML-like syntax inside JavaScript. A build tool turns it into <code>React.createElement()</code> calls.</p>
+<h3>Expressions</h3>
+<p>Put any JavaScript expression inside curly braces.</p>
+<pre><code>const name = "Asha";
+const el = &lt;h1&gt;Hello, {name.toUpperCase()}! 2+2 = {2 + 2}&lt;/h1&gt;;</code></pre>
+<h3>Attributes</h3>
+<p>Use camelCase names: <code>className</code> instead of <code>class</code>, <code>htmlFor</code> instead of <code>for</code>. Strings use quotes, values use braces.</p>
+<pre><code>&lt;img src={user.photo} className="avatar" alt="profile" /&gt;</code></pre>
+<h3>Children</h3>
+<p>Elements can nest. A JSX expression must return one parent, so wrap siblings in a <code>&lt;div&gt;</code> or a fragment <code>&lt;&gt;...&lt;/&gt;</code>.</p>
+<h3>Rendering elements</h3>
+<pre><code>import { createRoot } from "react-dom/client";
+createRoot(document.getElementById("root")).render(&lt;App /&gt;);</code></pre>
+</section>
+
+<section id="s3"><h2>5.3 Components</h2><p class="pg">Pages 96 to 98</p>
+<p>A component is a JavaScript function that returns JSX. Its name must start with a capital letter.</p>
+<h3>Create your first component</h3>
+<pre><code>function Welcome() {
+  return &lt;h2&gt;Welcome to React&lt;/h2&gt;;
+}</code></pre>
+<h3>Composing components</h3>
+<p>Build big UIs by placing components inside other components.</p>
+<pre><code>function App() {
+  return (
+    &lt;&gt;
+      &lt;Header /&gt;
+      &lt;Welcome /&gt;
+      &lt;Footer /&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+</section>
+
+<section id="s4"><h2>5.4 Props and State</h2><p class="pg">Pages 98 to 99</p>
+<h3>Props</h3>
+<p>Inputs passed from parent to child. They are read-only.</p>
+<h3>State</h3>
+<p>Data a component owns and can change. Changing state re-renders the component. Use the <code>useState</code> hook.</p>
+<h3>Communication using props</h3>
+<p>Data flows down through props. To send data up, the parent passes a function as a prop and the child calls it.</p>
+<pre><code>function Greeting({ name }) {            // props
+  return &lt;p&gt;Hi {name}&lt;/p&gt;;
+}
+function Counter() {
+  const [count, setCount] = useState(0);   // state
+  return &lt;button onClick={() =&gt; setCount(count + 1)}&gt;{count}&lt;/button&gt;;
+}</code></pre>
+<p><strong>Try it:</strong> this is the same state idea running live.</p>
+<div class="demo"><b id="cnt">0</b><button id="inc">Add 1</button><button id="dec" class="alt">Subtract 1</button><button id="rst" class="alt">Reset</button></div>
+</section>
+
+<section id="s44"><h2>5.4.4 Component lifecycle methods</h2><p class="pg">Pages 101 to 103</p>
+<p>Every component goes through phases. Pick one:</p>
+<div class="tabs" id="tabs">
+<button aria-pressed="true" data-k="0">Initialization</button><button aria-pressed="false" data-k="1">Mounting</button><button aria-pressed="false" data-k="2">Updating</button><button aria-pressed="false" data-k="3">Unmounting</button><button aria-pressed="false" data-k="4">Error handling</button>
+</div>
+<div class="phase" id="phase"></div>
+<pre><code>// Function component equivalent
+useEffect(() =&gt; {
+  console.log("mounted");           // componentDidMount
+  return () =&gt; console.log("bye");  // componentWillUnmount
+}, []);
+
+useEffect(() =&gt; { /* runs when count changes */ }, [count]);  // componentDidUpdate</code></pre>
+</section>
+
+<section id="s5"><h2>5.5 Handling events</h2><p class="pg">Page 103</p>
+<p>Events use camelCase names and you pass a function, not a string. Call <code>e.preventDefault()</code> to stop default behaviour such as form submission.</p>
+<pre><code>function Save() {
+  function handleClick(e) { e.preventDefault(); alert("Saved"); }
+  return &lt;button onClick={handleClick}&gt;Save&lt;/button&gt;;
+}</code></pre>
+</section>
+
+<section id="s6"><h2>5.6 Conditional rendering</h2><p class="pg">Page 104</p>
+<p>Show different UI depending on a condition, using plain JavaScript.</p>
+<pre><code>{isLoggedIn ? &lt;Dashboard /&gt; : &lt;Login /&gt;}   // ternary
+{unread &gt; 0 &amp;&amp; &lt;Badge n={unread} /&gt;}         // logical AND
+if (loading) return &lt;Spinner /&gt;;               // early return</code></pre>
+</section>
+
+<section id="s7"><h2>5.7 Lists and keys</h2><p class="pg">Page 104</p>
+<p>Use <code>map()</code> to turn an array into elements. Each item needs a unique, stable <code>key</code> so React can track it. Prefer an id over the array index.</p>
+<pre><code>&lt;ul&gt;
+  {todos.map(t =&gt; &lt;li key={t.id}&gt;{t.text}&lt;/li&gt;)}
+&lt;/ul&gt;</code></pre>
+</section>
+
+<section id="s8"><h2>5.8 Forms</h2><p class="pg">Pages 105 to 109</p>
+<h3>HTML tags in forms</h3>
+<p><code>&lt;input&gt;</code>, <code>&lt;select&gt;</code>, <code>&lt;textarea&gt;</code> and <code>&lt;input type="file"&gt;</code> all work in JSX. In React, <code>textarea</code> and <code>select</code> use a <code>value</code> prop.</p>
+<h3>Controlled components</h3>
+<p>React state is the single source of truth for the input's value.</p>
+<pre><code>const [name, setName] = useState("");
+&lt;input value={name} onChange={e =&gt; setName(e.target.value)} /&gt;</code></pre>
+<h3>Uncontrolled components</h3>
+<p>The DOM keeps the value, and you read it with a ref when needed. Useful for file inputs and simple forms.</p>
+<pre><code>const ref = useRef();
+&lt;input ref={ref} /&gt;
+&lt;button onClick={() =&gt; alert(ref.current.value)}&gt;Read&lt;/button&gt;</code></pre>
+<p><strong>Try it:</strong> a controlled input, live.</p>
+<div class="demo"><input id="ci" placeholder="Type your name" style="font:inherit;padding:8px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"><span>Hello, <b id="co" style="font-size:1.2rem;min-width:0">stranger</b></span></div>
+</section>
+
+<section id="s9"><h2>5.9 Lifting state up</h2><p class="pg">Page 109</p>
+<p>When two components need the same data, move the state to their closest common parent and pass it down as props, along with a setter function.</p>
+<pre><code>function Parent() {
+  const [temp, setTemp] = useState(0);
+  return (
+    &lt;&gt;
+      &lt;Input value={temp} onChange={setTemp} /&gt;
+      &lt;Display value={temp} /&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+</section>
+
+<section id="s10"><h2>5.10 Testing single page applications</h2><p class="pg">Page 110</p>
+<p>Common tools: <strong>Jest</strong> or <strong>Vitest</strong> as the test runner and <strong>React Testing Library</strong> to test what users see.</p>
+<pre><code>import { render, screen } from "@testing-library/react";
+test("shows welcome text", () =&gt; {
+  render(&lt;Welcome /&gt;);
+  expect(screen.getByText(/welcome/i)).toBeInTheDocument();
+});</code></pre>
+</section>
+
+<section id="q"><h2>Important questions</h2><p class="pg">Tap a question to reveal a short answer</p>
+<details><summary>What is the difference between props and state?</summary>Props are passed in from a parent and are read-only. State is owned by the component and can change, causing a re-render.</details>
+<details><summary>What is the virtual DOM?</summary>A lightweight copy of the real DOM. React compares the old and new copies and updates only what changed.</details>
+<details><summary>Why are keys needed in lists?</summary>Keys let React identify which items were added, removed or moved, so it updates efficiently and keeps state correct.</details>
+<details><summary>Controlled vs uncontrolled components?</summary>Controlled: React state holds the input value. Uncontrolled: the DOM holds it and you read it through a ref.</details>
+<details><summary>Name the lifecycle phases.</summary>Initialization, mounting, updating, unmounting, plus error handling.</details>
+<details><summary>What does "lifting state up" mean?</summary>Moving shared state to the nearest common parent so sibling components stay in sync.</details>
+</section>
+</main>
+<footer>React study guide</footer>
+<button class="top" aria-label="Back to top" onclick="window.scrollTo({top:0})">↑</button>
+<script src="script.js"></script>
+</body>
+</html>
