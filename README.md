@@ -26,7 +26,7 @@ It provides a clean interface with study materials that can be used for learning
 * Git & GitHub
 * Vercel
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Clone the repository
 
@@ -42,11 +42,11 @@ cd react-study-guide
 
 Open the project in **VS Code** and run it using **Live Server**.
 
-## 🌐 Live Demo
+##  Live Demo
 
 [React Study Guide](https://react-study-guide.vercel.app/)
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
 react-study-guide/
@@ -57,7 +57,7 @@ react-study-guide/
 └── README.md
 ```
 
-## 🔮 Future Improvements
+##  Future Improvements
 
 * Interactive quizzes
 * Search functionality
@@ -66,7 +66,7 @@ react-study-guide/
 * Interactive React examples
 * User login
 
-## 👨‍💻 Author
+##  Author
 
 **Kishan HVKSP**
 
