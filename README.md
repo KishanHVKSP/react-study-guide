@@ -1,23 +1,23 @@
-# ⚛️ React Study Guide
+#  React Study Guide
 
 A simple and beginner-friendly web application for learning and revising **React concepts**.
 
-## 📌 About
+##  About
 
 **React Study Guide** is a frontend project created to help students understand important React concepts in an easy and organized way.
 
 It provides a clean interface with study materials that can be used for learning and quick revision.
 
-## ✨ Features
+##  Features
 
-* 📚 React study materials
-* 🎯 Beginner-friendly content
-* 🎨 Clean and simple UI
-* 📱 Responsive design
-* ⚡ Lightweight and fast
-* 🌐 Live web deployment
+*  React study materials
+*  Beginner-friendly content
+*  Clean and simple UI
+*  Responsive design
+*  Lightweight and fast
+*  Live web deployment
 
-## 🛠️ Technologies
+##  Technologies
 
 * HTML5
 * CSS3
